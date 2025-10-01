@@ -27,25 +27,28 @@ typedef struct {
 } Account;
 
 Account accounts[NUM_ACCOUNTS];
-double logs[NUM_THREADS][TRANSACTIONS_PER_TELLER];
+double logs[NUM_ACCOUNTS][NUM_THREADS][TRANSACTIONS_PER_TELLER];
 
 int deposit(int account_id, double amount) {
-    printf("Locking account %u...\n", account_id);
-    pthread_mutex_lock(&accounts[account_id].lock);
+    int result = pthread_mutex_lock(&accounts[account_id].lock);
 
-    if (pthread_mutex_lock(&accounts[account_id].lock) != 0) {
-        printf("Failed to acquire lock");
+    if (result != 0) {
+        printf("Failed to acquire lock\n");
         return 0;
     }
 
-    printf("Locked account: %u\n", account_id);
+    if (amount < 0 && accounts[account_id].balance + amount < 0) {
+        pthread_mutex_unlock(&accounts[account_id].lock);
+        // printf("Can't overdraft account with %f.\n", amount);
+        return 0;
+    }
 
     accounts[account_id].balance += amount;
     accounts[account_id].transaction_count++;
 
-    pthread_mutex_unlock(&accounts[account_id].lock);
+    // printf("Total: %f\n", accounts[account_id].balance);
 
-    printf("Unlocked account: %u\n", account_id);
+    pthread_mutex_unlock(&accounts[account_id].lock);
 
     return 1;
 }
@@ -67,28 +70,20 @@ void* teller_thread(void * arg) {
             random_account = rand_r(&seed) % NUM_ACCOUNTS; 
         }  
 
-        // only 1 account so not much to do with diff
-        double amount = 100;
-
-        printf("%d\n", i);
+        double amount = rand_r(&seed) % 125941 * (rand_r(&seed) % 2 == 0 ? 1 : -1) / (double)1000;
 
         result = deposit(random_account, amount);
 
-        printf("Result: %d\n", result);
-
         if (result == 0) {
+            seed = time(NULL) + pthread_self();
             i--;
+
             continue;
         }
 
-        logs[teller_id][i] = amount;
+        logs[random_account][teller_id][i] = amount;
 
-        printf("Thread %d: %s %f\n", teller_id, (amount < 0)? "Withdrawing" : "Depositing", fabs(amount));
-
-        // THIS WILL HAVE RACE CONDITIONS !
-
-        printf ("Teller %d: Transaction %d\n", teller_id, i) ;
-
+        printf("Thread %d: %s %.2f\n", teller_id, (amount < 0)? "Withdrawing" : "Depositing", fabs(amount));
     }
 
     return NULL ;
@@ -121,16 +116,35 @@ int main() {
         pthread_join(threads[i], NULL);
     }
 
-    printf("Final Account Balances: %f\n", accounts[0].balance);
+    printf("\n========================================\n");
+    printf("\tFinal Account Balances\n");
+    printf("========================================\n");
 
-    double sum = INITIAL_BALANCE; // starting account balance
-    for (int i = 0; i < NUM_THREADS; i++) {
-        for (int j = 0; j < TRANSACTIONS_PER_TELLER; j++) {
-            sum += logs[i][j];
-        }
+    for (int i = 0; i < NUM_ACCOUNTS; i++) {
+        // close mutex's as well
+        pthread_mutex_destroy(&accounts[i].lock);
+
+        printf("Account %d: %.2f\n", i, accounts[i].balance);
     }
 
-    printf("Correct Account Balance: %f\n\n", sum);
+    printf("\n========================================\n");
+    printf("\tCorrect Account Balances\n");
+    printf("========================================\n");
+
+    for (int i = 0; i < NUM_ACCOUNTS; i++) {
+
+        double sum = INITIAL_BALANCE; // starting account balance
+
+        for (int j = 0; j < NUM_THREADS; j++) {
+            for (int k = 0; k < TRANSACTIONS_PER_TELLER; k++) {
+                sum += logs[i][j][k];
+            }
+        }
+
+        printf("Account %d: %.2f\n", i, sum);
+    }
+
+    printf("\n");
 
     return 0;
 }
