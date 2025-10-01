@@ -61,7 +61,7 @@ int main() {
         };
     }
 
-    printf("Initial Balance: %f\n", accounts[0].balance);
+    printf("Initial Balance: %.2f\n", accounts[0].balance);
     
     // Creating threads ( see Appendix \ ref { sec : voidpointer } for void * explanation )
     pthread_t threads [NUM_THREADS];
@@ -77,7 +77,7 @@ int main() {
         pthread_join(threads[i], NULL);
     }
 
-    printf("Final Account Balances: %f\n", accounts[0].balance);
+    printf("Final Account Balances: %.2f\n", accounts[0].balance);
 
     double sum = INITIAL_BALANCE; // starting account balance
     for (int i = 0; i < NUM_THREADS; i++) {
@@ -86,7 +86,7 @@ int main() {
         }
     }
 
-    printf("Correct Account Balance: %f\n\n", sum);
+    printf("Correct Account Balance: $%.2f\n\n", sum);
 
     return 0;
 }

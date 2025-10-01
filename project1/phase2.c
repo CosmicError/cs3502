@@ -1,8 +1,3 @@
-// • Implement transfer operations requiring two account locks          [DONE]
-// • Create a scenario where deadlock is highly likely to occur         [DONE]
-// • Detect and report when threads appear stuck (no progress)          [TODO]
-// • Use multiple threads performing transfers between same accounts    [DONE]
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,9 +25,7 @@ Account accounts[NUM_ACCOUNTS];
 double logs[NUM_ACCOUNTS][NUM_THREADS][TRANSACTIONS_PER_TELLER];
 
 int deposit(int account_id, double amount) {
-    int result = pthread_mutex_lock(&accounts[account_id].lock);
-
-    if (result != 0) {
+    if (pthread_mutex_trylock(&accounts[account_id].lock) != 0) {
         printf("Failed to acquire lock\n");
         return 0;
     }
@@ -45,8 +38,6 @@ int deposit(int account_id, double amount) {
 
     accounts[account_id].balance += amount;
     accounts[account_id].transaction_count++;
-
-    // printf("Total: %f\n", accounts[account_id].balance);
 
     pthread_mutex_unlock(&accounts[account_id].lock);
 
@@ -100,7 +91,7 @@ int main() {
         pthread_mutex_init(&accounts[i].lock, NULL);
     }
 
-    printf("Initial Balance: %f\n", accounts[0].balance);
+    printf("Initial Balance: $%.2f\n", accounts[0].balance);
     
     // Creating threads ( see Appendix \ ref { sec : voidpointer } for void * explanation )
     pthread_t threads [NUM_THREADS];
