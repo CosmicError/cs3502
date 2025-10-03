@@ -29,7 +29,7 @@ int transfer(int from_id, int to_id, double amount) {
         return 0;
     }
 
-    if (pthread_mutex_trylock(&accounts[from_id].lock) != 0) {
+    if (pthread_mutex_lock(&accounts[from_id].lock) != 0) {
         // printf("Failed to acquire \'from\' account lock\n");
         return 0;
     }
@@ -45,9 +45,12 @@ int transfer(int from_id, int to_id, double amount) {
     usleep(100);
 
     // Detect deadlock
+    // Use trylock so we know there's a deadlock without actually locking up the thread
     if (pthread_mutex_trylock(&accounts[to_id].lock) != 0) {
         // printf("Failed to acquire \'to\' account lock\n");
-        // printf("Deadlock detected\n");
+        printf("Deadlock detected\n");
+        // Now lock up the thread
+        pthread_mutex_lock(&accounts[to_id].lock);
         pthread_mutex_unlock(&accounts[from_id].lock);
         return 0;
     }
@@ -98,7 +101,7 @@ void* teller_thread(void * arg) {
             continue;
         }
 
-        printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
+        // printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
     }
 
     return NULL ;
@@ -115,7 +118,10 @@ int main() {
         pthread_mutex_init(&accounts[i].lock, NULL);
     }
 
-    printf("Initial Balance: $%.2f\n", accounts[0].balance);
+    printf("Initial Balances:\n");
+    for (int i = 0; i < NUM_ACCOUNTS; i++) {
+        printf("\tAccount %d: $%.2f\n", i, accounts[i].balance);
+    }
     
     // Creating threads ( see Appendix \ ref { sec : voidpointer } for void * explanation )
     pthread_t threads [NUM_THREADS];
@@ -139,7 +145,7 @@ int main() {
         // close mutex's as well
         pthread_mutex_destroy(&accounts[i].lock);
 
-        printf("Account %d: $%.2f\n", i, accounts[i].balance);
+        printf("\tAccount %d: $%.2f\n", i, accounts[i].balance);
         // printf("Account %d Transactions: %d\n", i, accounts[i].transaction_count);
     }
 

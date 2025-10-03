@@ -8,8 +8,8 @@
 #include <math.h>
 
 #define NUM_ACCOUNTS 2
-#define NUM_THREADS 10
-#define TRANSACTIONS_PER_TELLER 10
+#define NUM_THREADS 100
+#define TRANSACTIONS_PER_TELLER 100
 
 const double INITIAL_BALANCE = 5000;
 
@@ -25,7 +25,7 @@ Account accounts[NUM_ACCOUNTS];
 
 int safe_transfer(int from_id, int to_id, double amount) {
     // Invalid amount
-    if (amount < 0) {
+    if (amount < 0 || from_id == to_id) {
         return 0;
     }
 
@@ -42,23 +42,23 @@ int safe_transfer(int from_id, int to_id, double amount) {
 
     // Detect deadlock
     if (pthread_mutex_trylock(&accounts[second].lock) != 0) {
-        printf("Failed to acquire \'to\' account lock\n");
-        printf("Deadlock detected\n");
+        // printf("Failed to acquire \'to\' account lock\n");
+        // printf("Deadlock detected\n");
         pthread_mutex_unlock(&accounts[first].lock);
         return 0;
     }
 
-    // Protect against overdraft
-    if ((from_id < to_id && accounts[first].balance - amount < 0) || (to_id < from_id && accounts[second].balance - amount < 0)) {
-        pthread_mutex_unlock(&accounts[second].lock);
-        pthread_mutex_unlock(&accounts[first].lock);
-        // printf("Unlocked\n");
-
-        return 0;
+    if (from_id < to_id) {
+        accounts[first].balance -= amount;
+        accounts[second].balance += amount;
+    }
+    else {
+        accounts[first].balance += amount;
+        accounts[second].balance -= amount;
     }
 
-    accounts[first].balance -= amount;
-    accounts[second].balance += amount;
+    // printf("Account %u Balance: %.2f\n", first, accounts[first].balance);
+    // printf("Account %u Balance: %.2f\n", second, accounts[second].balance);
 
     accounts[first].transaction_count++;
     accounts[second].transaction_count++;
@@ -95,7 +95,7 @@ void* teller_thread(void * arg) {
 
         double amount = rand_r(&seed) % 125941 / (double)1000;
 
-        result = safe_transfer(random_account, random_account_2, amount);
+        result = accounts[random_account].balance >= amount ? safe_transfer(random_account, random_account_2, amount) : 0;
 
         if (result == 0) {
             seed = time(NULL) + pthread_self();
@@ -104,7 +104,7 @@ void* teller_thread(void * arg) {
             continue;
         }
 
-        printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
+        // printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
     }
 
     return NULL ;
@@ -121,7 +121,10 @@ int main() {
         pthread_mutex_init(&accounts[i].lock, NULL);
     }
 
-    printf("Initial Balance: $%.2f\n", accounts[0].balance);
+    printf("Initial Balances:\n");
+    for (int i = 0; i < NUM_ACCOUNTS; i++) {
+        printf("....Account %d: $%.2f\n", i, accounts[i].balance);
+    }
     
     // Creating threads ( see Appendix \ ref { sec : voidpointer } for void * explanation )
     pthread_t threads [NUM_THREADS];
@@ -137,15 +140,13 @@ int main() {
         pthread_join(threads[i], NULL);
     }
 
-    printf("\n========================================\n");
-    printf("\tFinal Account Balances\n");
-    printf("========================================\n");
+    printf("\nFinal Account Balances\n");
 
     for (int i = 0; i < NUM_ACCOUNTS; i++) {
         // close mutex's as well
         pthread_mutex_destroy(&accounts[i].lock);
 
-        printf("Account %d: $%.2f\n", i, accounts[i].balance);
+        printf("....Account %d: $%.2f\n", i, accounts[i].balance);
         // printf("Account %d Transactions: %d\n", i, accounts[i].transaction_count);
     }
 
