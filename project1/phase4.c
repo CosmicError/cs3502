@@ -8,8 +8,8 @@
 #include <math.h>
 
 #define NUM_ACCOUNTS 2
-#define NUM_THREADS 100
-#define TRANSACTIONS_PER_TELLER 100
+#define NUM_THREADS 10
+#define TRANSACTIONS_PER_TELLER 10
 
 const double INITIAL_BALANCE = 5000;
 
@@ -104,7 +104,7 @@ void* teller_thread(void * arg) {
             continue;
         }
 
-        // printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
+        printf("Thread %d: Transfering $%.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
     }
 
     return NULL ;

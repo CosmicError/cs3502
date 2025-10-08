@@ -101,7 +101,7 @@ void* teller_thread(void * arg) {
             continue;
         }
 
-        // printf("Thread %d: Transfering %.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
+        printf("Thread %d: Transfering $%.2f from account %u to account %u \n", teller_id, amount, random_account, random_account_2);
     }
 
     return NULL ;

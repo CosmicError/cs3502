@@ -25,10 +25,8 @@ Account accounts[NUM_ACCOUNTS];
 double logs[NUM_ACCOUNTS][NUM_THREADS][TRANSACTIONS_PER_TELLER];
 
 int deposit(int account_id, double amount) {
-    if (pthread_mutex_trylock(&accounts[account_id].lock) != 0) {
-        printf("Failed to acquire lock\n");
-        return 0;
-    }
+
+    pthread_mutex_lock(&accounts[account_id].lock);
 
     if (amount < 0 && accounts[account_id].balance + amount < 0) {
         pthread_mutex_unlock(&accounts[account_id].lock);
@@ -74,7 +72,7 @@ void* teller_thread(void * arg) {
 
         logs[random_account][teller_id][i] = amount;
 
-        printf("Thread %d: %s %.2f\n", teller_id, (amount < 0)? "Withdrawing" : "Depositing", fabs(amount));
+        printf("Thread %d: %s $%.2f\n", teller_id, (amount < 0)? "Withdrawing" : "Depositing", fabs(amount));
     }
 
     return NULL ;
@@ -115,7 +113,7 @@ int main() {
         // close mutex's as well
         pthread_mutex_destroy(&accounts[i].lock);
 
-        printf("Account %d: %.2f\n", i, accounts[i].balance);
+        printf("Account %d: $%.2f\n", i, accounts[i].balance);
     }
 
     printf("\n========================================\n");
@@ -132,7 +130,7 @@ int main() {
             }
         }
 
-        printf("Account %d: %.2f\n", i, sum);
+        printf("Account %d: $%.2f\n", i, sum);
     }
 
     printf("\n");

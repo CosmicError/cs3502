@@ -41,7 +41,7 @@ void* teller_thread(void * arg) {
         accounts[random_account].transaction_count++;
 
         logs[teller_id][i] = diff;
-        printf("Thread %d: %s %f\n", teller_id, (diff < 0)? "Withdrawing" : "Depositing", fabs(diff));
+        printf("Thread %d: %s $%f\n", teller_id, (diff < 0)? "Withdrawing" : "Depositing", fabs(diff));
 
         // THIS WILL HAVE RACE CONDITIONS !
 

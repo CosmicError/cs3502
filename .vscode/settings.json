@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "numbers": "c",
-    "functional": "c"
+    "functional": "c",
+    "errno.h": "c"
   }
 }
