@@ -1,0 +1,16 @@
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.exe
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.dll.config
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.deps.json
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.runtimeconfig.json
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.dll
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\bin\Debug\net8.0-windows\CpuScheduler.pdb
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.CpuSchedulerForm.resources
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.Properties.Resources.resources
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.csproj.GenerateResource.cache
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.csproj.CoreCompileInputs.cache
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.dll
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\refint\CpuScheduler.dll
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.pdb
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\CpuScheduler.genruntimeconfig.cache
+D:\Documents\School Assignments\CS-3502-CPU-Sim-Project-StartingPoint-main\CpuScheduler\obj\Debug\net8.0-windows\ref\CpuScheduler.dll

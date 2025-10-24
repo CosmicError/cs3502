@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "I4uyacvJDWzkSWaO1Ty53dVXGrbkqNGZnqGeeNj3lT01DuXOXNfOCNfw4kWu5Q7yHg2uD98wntlNcuLErFQzzA==",
+  "success": true,
+  "projectFilePath": "D:\\Documents\\School Assignments\\CS-3502-CPU-Sim-Project-StartingPoint-main\\CpuScheduler\\CpuScheduler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jack\\.nuget\\packages\\microsoft.visualbasic\\10.3.0\\microsoft.visualbasic.10.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
