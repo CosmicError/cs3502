@@ -1,0 +1,16 @@
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.Form1.resources
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.csproj.GenerateResource.cache
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.AssemblyInfoInputs.cache
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.AssemblyInfo.cs
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.csproj.CoreCompileInputs.cache
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\bin\Debug\net8.0-windows\CS3502_Project3.exe
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\bin\Debug\net8.0-windows\CS3502_Project3.deps.json
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\bin\Debug\net8.0-windows\CS3502_Project3.runtimeconfig.json
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\bin\Debug\net8.0-windows\CS3502_Project3.dll
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\bin\Debug\net8.0-windows\CS3502_Project3.pdb
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.dll
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\refint\CS3502_Project3.dll
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.pdb
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\CS3502_Project3.genruntimeconfig.cache
+C:\Users\Jack\source\repos\CS3502_Project3\CS3502_Project3\obj\Debug\net8.0-windows\ref\CS3502_Project3.dll
